@@ -81,14 +81,6 @@ const TransferPricingApp = () => {
       setData(prev => [...prev, newRecord]);
     }
 
-    setFormData({
-      date: new Date().toISOString().split('T')[0],
-      serviceProvider: '',
-      serviceName: '',
-      price: '',
-      serviceReceiver: '',
-      quantity: ''
-    });
     setIsPriceFixed(false);
   };
 
@@ -306,48 +298,37 @@ const TransferPricingApp = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">ชื่อบริการ</label>
-                {editingIndex >= 0 ? (
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={formData.serviceName}
-                      onChange={e => handleServiceNameInput(e.target.value)}
-                      onFocus={() => formData.serviceName && setShowServiceNameDropdown(true)}
-                      onBlur={() => setTimeout(() => setShowServiceNameDropdown(false), 100)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="พิมพ์ชื่อบริการ"
-                      required
-                    />
-                    {showServiceNameDropdown && serviceNameSuggestions.length > 0 && (
-                      <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg w-full mt-1 max-h-40 overflow-y-auto">
-                        {serviceNameSuggestions.map((s, idx) => (
-                          <li
-                            key={s + idx}
-                            className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                            onMouseDown={() => {
-                              setFormData(prev => ({ ...prev, serviceName: s }));
-                              setShowServiceNameDropdown(false);
-                            }}
-                          >
-                            {s}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ) : (
-                  <select
+                <div className="relative">
+                  <input
+                    type="text"
                     value={formData.serviceName}
-                    onChange={(e) => handleInputChange('serviceName', e.target.value)}
+                    onChange={e => handleServiceNameInput(e.target.value)}
+                    onFocus={() => {
+                      setServiceNameSuggestions(sampleServices);
+                      setShowServiceNameDropdown(true);
+                    }}
+                    onBlur={() => setTimeout(() => setShowServiceNameDropdown(false), 100)}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="พิมพ์ชื่อบริการ"
                     required
-                  >
-                    <option value="">เลือกบริการ</option>
-                    {sampleServices.map(service => (
-                      <option key={service} value={service}>{service}</option>
-                    ))}
-                  </select>
-                )}
+                  />
+                  {showServiceNameDropdown && serviceNameSuggestions.length > 0 && (
+                    <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg w-full mt-1 max-h-40 overflow-y-auto">
+                      {serviceNameSuggestions.map((s, idx) => (
+                        <li
+                          key={s + idx}
+                          className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                          onMouseDown={() => {
+                            setFormData(prev => ({ ...prev, serviceName: s }));
+                            setShowServiceNameDropdown(false);
+                          }}
+                        >
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
 
               <div>
@@ -365,48 +346,37 @@ const TransferPricingApp = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">หน่วยงานรับบริการ</label>
-                {editingIndex >= 0 ? (
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={formData.serviceReceiver}
-                      onChange={e => handleServiceReceiverInput(e.target.value)}
-                      onFocus={() => formData.serviceReceiver && setShowServiceReceiverDropdown(true)}
-                      onBlur={() => setTimeout(() => setShowServiceReceiverDropdown(false), 100)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="พิมพ์หน่วยงานรับบริการ"
-                      required
-                    />
-                    {showServiceReceiverDropdown && serviceReceiverSuggestions.length > 0 && (
-                      <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg w-full mt-1 max-h-40 overflow-y-auto">
-                        {serviceReceiverSuggestions.map((r, idx) => (
-                          <li
-                            key={r + idx}
-                            className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                            onMouseDown={() => {
-                              setFormData(prev => ({ ...prev, serviceReceiver: r }));
-                              setShowServiceReceiverDropdown(false);
-                            }}
-                          >
-                            {r}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ) : (
-                  <select
+                <div className="relative">
+                  <input
+                    type="text"
                     value={formData.serviceReceiver}
-                    onChange={(e) => handleInputChange('serviceReceiver', e.target.value)}
+                    onChange={e => handleServiceReceiverInput(e.target.value)}
+                    onFocus={() => {
+                      setServiceReceiverSuggestions(sampleReceivers);
+                      setShowServiceReceiverDropdown(true);
+                    }}
+                    onBlur={() => setTimeout(() => setShowServiceReceiverDropdown(false), 100)}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="พิมพ์หน่วยงานรับบริการ"
                     required
-                  >
-                    <option value="">เลือกหน่วยงาน</option>
-                    {sampleReceivers.map(receiver => (
-                      <option key={receiver} value={receiver}>{receiver}</option>
-                    ))}
-                  </select>
-                )}
+                  />
+                  {showServiceReceiverDropdown && serviceReceiverSuggestions.length > 0 && (
+                    <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg w-full mt-1 max-h-40 overflow-y-auto">
+                      {serviceReceiverSuggestions.map((r, idx) => (
+                        <li
+                          key={r + idx}
+                          className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                          onMouseDown={() => {
+                            setFormData(prev => ({ ...prev, serviceReceiver: r }));
+                            setShowServiceReceiverDropdown(false);
+                          }}
+                        >
+                          {r}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
 
               <div>
@@ -416,6 +386,7 @@ const TransferPricingApp = () => {
                   step="0.01"
                   value={formData.quantity}
                   onChange={(e) => handleInputChange('quantity', e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') { handleSubmit(); } }}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="0"
                   required
